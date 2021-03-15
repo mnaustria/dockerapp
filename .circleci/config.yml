@@ -62,7 +62,9 @@ workflows:
       - test-docker:
           requires:
             - build
-      
+      - deploy-docker:
+          requires:
+          - test-docker
       - result-docker:
           requires:
             - deploy-docker
