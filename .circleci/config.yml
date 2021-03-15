@@ -71,11 +71,16 @@ workflows:
       - test-docker:
           requires:
             - build
+      - upload-docker-artifact:
+          requires:
+            - test-docker
       - deploy-docker:
           requires:
           - test-docker
+          - upload-docker-artifact
       - result-docker:
           requires:
+            - upload-docker-artifact
             - deploy-docker
             - test-docker
 
