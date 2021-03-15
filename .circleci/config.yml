@@ -19,6 +19,8 @@ jobs:
   test-docker:
     executor: deploy-defaults
     steps:
+      - checkout
+      - setup_remote_docker
       - run:
           name: Run tests
           command: |
