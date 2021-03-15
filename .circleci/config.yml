@@ -31,6 +31,20 @@ jobs:
           command: |
             docker-compose up -d
             docker-compose run dockerapp python test.py
+  upload-docker-artifact:
+    executor: deploy-defaults
+    steps:
+      - run:
+          name: Upload Docker
+          command: |
+            echo "Uploading Docker"
+  deploy-docker:
+    executor: deploy-defaults
+    steps:
+      - run:
+          name: Deploy Docker
+          command: |
+            echo "Deploying Docker"
   result-docker:
     executor: deploy-defaults
     steps:
@@ -48,5 +62,9 @@ workflows:
       - test-docker:
           requires:
             - build
-      - result-docker
+      
+      - result-docker:
+          requires:
+            - deploy-docker
+            - test-docker
 
