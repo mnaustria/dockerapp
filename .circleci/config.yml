@@ -1,9 +1,12 @@
 version: 2
-jobs:
-  build:
-    working_directory: /dockerapp
+executors:
+  deploy-defaults:
     docker:
       - image: docker:17.05.0-ce-git
+    working_directory: /dockerapp
+jobs:
+  build:
+    executor: deploy-defaults
     steps:
       - checkout
       - setup_remote_docker
@@ -12,8 +15,17 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
+    test:
       - run:
           name: Run tests
           command: |
             docker-compose up -d
             docker-compose run dockerapp python test.py
+
+workflows:
+  version: 2
+  jobs:
+    - build
+    - test:
+      requires:
+        - build
