@@ -45,6 +45,10 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
+      - run: 
+          name: Docker build image
+          command: |
+            docker build -t dockerapp_dockerapp .
       - deploy:
           name: Push application Docker image
           command: |
