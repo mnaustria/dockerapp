@@ -1,4 +1,5 @@
-version: 2
+version: 2.1
+
 executors:
   deploy-defaults:
     docker:
@@ -15,7 +16,7 @@ jobs:
           command: |
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
-    test:
+    test-docker:
       - run:
           name: Run tests
           command: |
@@ -23,9 +24,12 @@ jobs:
             docker-compose run dockerapp python test.py
 
 workflows:
-  version: 2
+  version: 2.1
+
+  pipeline:
     jobs:
       - build
-      - test:
-        requires:
-          - build
+      - test-docker:
+          requires:
+            - build
+
