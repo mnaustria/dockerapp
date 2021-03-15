@@ -25,7 +25,7 @@ jobs:
             docker-compose up -d
             docker-compose run dockerapp python test.py
 workflows:
-  version: 2.1
+  version: 2
 
   pipeline:
     jobs:
